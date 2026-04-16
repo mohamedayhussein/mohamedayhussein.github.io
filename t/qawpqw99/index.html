@@ -282,10 +282,22 @@
   }
 
   .detail-content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    padding-top: 4px;
+    align-items: start;
+  }
+
+  .detail-left {
+    flex-shrink: 0;
+  }
+
+  .detail-right {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding-top: 4px;
+    gap: 14px;
+    min-width: 0;
   }
 
   .detail-section-label {
@@ -298,10 +310,26 @@
   }
 
   .detail-image {
-    max-width: 400px;
+    width: 280px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
+  }
+
+  .detail-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 700px) {
+    .detail-content {
+      grid-template-columns: 1fr;
+    }
+    .detail-image {
+      width: 100%;
+      max-width: 280px;
+    }
   }
 
   .detail-link a,
@@ -550,17 +578,22 @@
 
   // ─── Build Detail Content ───
   function buildDetailHtml(item) {
-    var parts = [];
+    var left = '<div class="detail-left">';
+    left += '<img class="detail-image" src="' + imageUrl(item) + '" alt="' + escapeHtml(item.name) + ' illustration" loading="lazy">';
+    left += '</div>';
 
-    // Skill illustration
-    parts.push('<div><div class="detail-section-label">Illustration</div><img class="detail-image" src="' + imageUrl(item) + '" alt="' + escapeHtml(item.name) + ' illustration" loading="lazy"></div>');
+    var right = '<div class="detail-right">';
 
-    if (item.notes) {
-      parts.push('<div><div class="detail-section-label">Notes</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.5">' + escapeHtml(item.notes) + '</div></div>');
+    if (item.detailedDescription) {
+      right += '<div><div class="detail-section-label">About</div><div class="detail-description">' + escapeHtml(item.detailedDescription) + '</div></div>';
     }
 
     if (item.link) {
-      parts.push('<div class="detail-link"><div class="detail-section-label">Link</div><a href="' + escapeHtml(item.link) + '" target="_blank" rel="noopener">' + escapeHtml(item.link) + '</a></div>');
+      right += '<div class="detail-link"><div class="detail-section-label">Web App</div><a href="' + escapeHtml(item.link) + '" target="_blank" rel="noopener">' + escapeHtml(item.link) + '</a></div>';
+    }
+
+    if (item.notes) {
+      right += '<div><div class="detail-section-label">Notes</div><div style="font-size:13px;color:var(--text-secondary);line-height:1.5">' + escapeHtml(item.notes) + '</div></div>';
     }
 
     if (item.examples && item.examples.length) {
@@ -569,20 +602,20 @@
         var url = ex.url || ex;
         return '<li><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">' + escapeHtml(label) + '</a></li>';
       }).join('');
-      parts.push('<div class="detail-examples"><div class="detail-section-label">Examples</div><ul>' + lis + '</ul></div>');
+      right += '<div class="detail-examples"><div class="detail-section-label">Examples</div><ul>' + lis + '</ul></div>';
     }
 
     if (item.comparison) {
-      parts.push(
-        '<div><div class="detail-section-label">Comparison</div>' +
+      right += '<div><div class="detail-section-label">Comparison</div>' +
         '<div class="comparison-panel">' +
         '<div class="comparison-col without"><span class="comparison-label">Without</span>' + renderComparisonContent(item.comparison.without) + '</div>' +
         '<div class="comparison-col with"><span class="comparison-label">With</span>' + renderComparisonContent(item.comparison.with) + '</div>' +
-        '</div></div>'
-      );
+        '</div></div>';
     }
 
-    return parts.join('');
+    right += '</div>';
+
+    return left + right;
   }
 
   // ─── Rendering ───
