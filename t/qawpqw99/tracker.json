@@ -100,6 +100,14 @@
     "link": "https://kmeans-tool.vercel.app"
   },
   {
+    "id": "concept-checks",
+    "name": "Concept Checks",
+    "type": "tool",
+    "status": "done",
+    "description": "Duolingo-style PWA for students to review lecture content through interactive quizzes with XP gamification, AI grading, and instructor dashboard",
+    "link": "https://concept-checks.vercel.app"
+  },
+  {
     "id": "critical-read",
     "name": "Critical Read",
     "type": "skill",
