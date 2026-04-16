@@ -70,21 +70,7 @@
     "status": "done",
     "description": "Draft and revise academic writing in Mohamed Hussein's voice for top journals"
   },
-  {
-    "id": "study-summary",
-    "name": "Study Summary",
-    "type": "library",
-    "status": "done",
-    "description": "Output templates, AMA formatting rules, and canonical analysis structure for analyze-study"
-  },
-  {
-    "id": "methodological-detail-log",
-    "name": "Methodological Detail Log",
-    "type": "library",
-    "status": "done",
-    "description": "Format reference for logging methodological decisions to METHODOLOGICAL_LOG.md"
-  },
-  {
+{
     "id": "skill-creator",
     "name": "Skill Creator",
     "type": "tool",
@@ -106,54 +92,5 @@
     "status": "done",
     "description": "Duolingo-style PWA for students to review lecture content through interactive quizzes with XP gamification, AI grading, and instructor dashboard",
     "link": "https://concept-checks.vercel.app"
-  },
-  {
-    "id": "critical-read",
-    "name": "Critical Read",
-    "type": "skill",
-    "status": "planned",
-    "description": "Structured critical read of a paper PDF — contribution, method, strengths, weaknesses, stealable ideas"
-  },
-  {
-    "id": "review-a-paper",
-    "name": "Review a Paper",
-    "type": "skill",
-    "status": "planned",
-    "description": "Structured referee reports for journal submissions"
-  },
-  {
-    "id": "experimental-design",
-    "name": "Experimental Design",
-    "type": "skill",
-    "status": "planned",
-    "description": "Research question → conditions → DV → attention checks → Qualtrics-ready design spec"
-  },
-  {
-    "id": "stimulus-pretest",
-    "name": "Stimulus Pretest",
-    "type": "skill",
-    "status": "planned",
-    "description": "Generate stimulus variants and run a small Prolific pretest for robustness"
-  },
-  {
-    "id": "power-and-prereg",
-    "name": "Power & Prereg",
-    "type": "skill",
-    "status": "planned",
-    "description": "Power analysis + AsPredicted/OSF preregistration drafting"
-  },
-  {
-    "id": "paper-empirical",
-    "name": "Paper (Empirical)",
-    "type": "skill",
-    "status": "planned",
-    "description": "Draft methods + results sections from a verified analysis summary"
-  },
-  {
-    "id": "paper-theoretical",
-    "name": "Paper (Theoretical)",
-    "type": "skill",
-    "status": "planned",
-    "description": "Draft intro + general discussion from literature notes and headline"
   }
 ]
