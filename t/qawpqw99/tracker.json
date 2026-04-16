@@ -25,7 +25,8 @@
     "name": "Academic Site Generator",
     "type": "skill",
     "status": "done",
-    "description": "Convert paper PDFs into an LLM-optimized GitHub Pages site with Schema.org markup and SSRN packages"
+    "description": "Convert paper PDFs into an LLM-optimized GitHub Pages site with Schema.org markup and SSRN packages",
+    "link": "https://mohamedayhussein.github.io"
   },
   {
     "id": "beautiful-beamer",
@@ -95,7 +96,8 @@
     "name": "K-Means Clustering",
     "type": "tool",
     "status": "done",
-    "description": "Key-means clustering tool for data analysis"
+    "description": "K-means clustering tool for data analysis",
+    "link": "https://kmeans-tool.vercel.app"
   },
   {
     "id": "critical-read",
