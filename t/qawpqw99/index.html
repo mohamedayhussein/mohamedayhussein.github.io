@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools & Skills — Mohamed Hussein</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --bg-subtle: #f0ede8;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #5c5a56;
+    --text-tertiary: #8a8780;
+    --border: #e5e2dc;
+    --border-light: #eeebe6;
+
+    --done: #2d8a4e;
+    --done-bg: #e8f5ed;
+    --done-border: #2d8a4e;
+
+    --needs-improvement: #c67b1a;
+    --needs-improvement-bg: #fef3e2;
+    --needs-improvement-border: #c67b1a;
+
+    --wip: #2563b3;
+    --wip-bg: #e8f0fe;
+    --wip-border: #2563b3;
+
+    --planned: #7a7770;
+    --planned-bg: #f0ede8;
+    --planned-border: #9a9790;
+
+    --accent: #1a1a1a;
+    --accent-light: #f0ede8;
+
+    --radius: 12px;
+    --radius-sm: 6px;
+    --radius-pill: 100px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+    --transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Subtle grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  header .container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* ─── FILTER BAR ─── */
+  .filters {
+    padding: 20px 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+
+  .filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+    font-family: inherit;
+    line-height: 1.4;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--text-tertiary);
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .filter-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .filter-btn.active:hover {
+    background: #333;
+  }
+
+  /* Status-specific active states */
+  .filter-btn[data-status="done"].active {
+    background: var(--done);
+    border-color: var(--done);
+    color: #fff;
+  }
+  .filter-btn[data-status="needs-improvement"].active {
+    background: var(--needs-improvement);
+    border-color: var(--needs-improvement);
+    color: #fff;
+  }
+  .filter-btn[data-status="wip"].active {
+    background: var(--wip);
+    border-color: var(--wip);
+    color: #fff;
+  }
+  .filter-btn[data-status="planned"].active {
+    background: var(--planned);
+    border-color: var(--planned);
+    color: #fff;
+  }
+
+  /* ─── GRID ─── */
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    padding-bottom: 80px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: box-shadow var(--transition), transform var(--transition);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: var(--radius) 0 0 var(--radius);
+    transition: width var(--transition);
+  }
+
+  .card[data-status="done"]::before { background: var(--done); }
+  .card[data-status="needs-improvement"]::before { background: var(--needs-improvement); }
+  .card[data-status="wip"]::before { background: var(--wip); }
+  .card[data-status="planned"]::before { background: var(--planned-border); }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .card.expanded {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card-collapsed {
+    padding: 18px 20px 18px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-badges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .badge-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+
+  .badge-status.done {
+    background: var(--done-bg);
+    color: var(--done);
+  }
+  .badge-status.needs-improvement {
+    background: var(--needs-improvement-bg);
+    color: var(--needs-improvement);
+  }
+  .badge-status.wip {
+    background: var(--wip-bg);
+    color: var(--wip);
+  }
+  .badge-status.planned {
+    background: var(--planned-bg);
+    color: var(--planned);
+  }
+
+  .badge-type {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ─── EXPANDED CONTENT ─── */
+  .card-expanded {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.25s ease;
+    opacity: 0;
+  }
+
+  .card.expanded .card-expanded {
+    max-height: 800px;
+    opacity: 1;
+  }
+
+  .card-expanded-inner {
+    padding: 0 20px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 4px;
+    padding-top: 14px;
+  }
+
+  .card-notes {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .card-link a,
+  .card-examples a {
+    font-size: 13px;
+    color: var(--wip);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition);
+    word-break: break-all;
+  }
+
+  .card-link a:hover,
+  .card-examples a:hover {
+    color: #1a4d80;
+    text-decoration: underline;
+  }
+
+  .card-examples-label,
+  .card-link-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .card-examples ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .card-examples li::before {
+    content: '\2192';
+    margin-right: 6px;
+    color: var(--text-tertiary);
+    font-size: 12px;
+  }
+
+  /* ─── A/B COMPARISON PANEL ─── */
+  .comparison-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .comparison-col {
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .comparison-col.without {
+    background: #fdf2f2;
+    border: 1px solid #f0d4d4;
+  }
+
+  .comparison-col.with {
+    background: #f0f9f2;
+    border: 1px solid #c8e6cf;
+  }
+
+  .comparison-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .comparison-col.without .comparison-label { color: #a33; }
+  .comparison-col.with .comparison-label { color: #2a7; }
+
+  .comparison-col img {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .comparison-col p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ─── STATES ─── */
+  .state-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-tertiary);
+    font-size: 15px;
+  }
+
+  .state-message .state-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+    opacity: 0.5;
+  }
+
+  .state-message a {
+    color: var(--wip);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .state-message a:hover {
+    text-decoration: underline;
+  }
+
+  /* ─── EXPAND INDICATOR ─── */
+  .expand-chevron {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--text-tertiary);
+    transition: transform 0.25s ease;
+    margin-left: 4px;
+  }
+
+  .card.expanded .expand-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    #grid {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    header {
+      padding: 36px 0 28px;
+    }
+
+    .comparison-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .container {
+      padding: 0 16px;
+    }
+  }
+
+  /* ─── STAGGERED ENTRY ANIMATION ─── */
+  @keyframes cardIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card {
+    animation: cardIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <span class="header-eyebrow">Mohamed Hussein</span>
+    <h1>Tools &amp; Skills</h1>
+    <p class="subtitle" id="subtitle">Loading...</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="filters">
+    <div class="filter-row">
+      <span class="filter-label">Status</span>
+      <button class="filter-btn active" data-group="status" data-status="all">All</button>
+      <button class="filter-btn" data-group="status" data-status="done">Done</button>
+      <button class="filter-btn" data-group="status" data-status="needs-improvement">Needs Improvement</button>
+      <button class="filter-btn" data-group="status" data-status="wip">WIP</button>
+      <button class="filter-btn" data-group="status" data-status="planned">Planned</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Type</span>
+      <button class="filter-btn active" data-group="type" data-type="all">All</button>
+      <button class="filter-btn" data-group="type" data-type="skill">Skill</button>
+      <button class="filter-btn" data-group="type" data-type="tool">Tool</button>
+      <button class="filter-btn" data-group="type" data-type="workflow">Workflow</button>
+      <button class="filter-btn" data-group="type" data-type="library">Library</button>
+    </div>
+  </div>
+
+  <main id="grid"></main>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const grid = document.getElementById('grid');
+  const subtitle = document.getElementById('subtitle');
+  let items = [];
+  let activeStatus = 'all';
+  let activeType = 'all';
+
+  const STATUS_PRIORITY = { done: 0, 'needs-improvement': 1, wip: 2, planned: 3 };
+  const STATUS_LABELS = { done: 'Done', 'needs-improvement': 'Needs Improvement', wip: 'WIP', planned: 'Planned' };
+
+  // ─── Data Loading ───
+  function load() {
+    grid.innerHTML = '<div class="state-message"><span class="state-icon">&#8987;</span>Loading...</div>';
+    fetch('./tracker.json')
+      .then(function(r) {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then(function(data) {
+        items = data;
+        if (!items.length) {
+          grid.innerHTML = '<div class="state-message"><span class="state-icon">&#9744;</span>No items tracked yet.</div>';
+          subtitle.textContent = '0 items';
+          return;
+        }
+        items.sort(function(a, b) {
+          var pa = STATUS_PRIORITY[a.status] || 99;
+          var pb = STATUS_PRIORITY[b.status] || 99;
+          if (pa !== pb) return pa - pb;
+          return a.name.localeCompare(b.name);
+        });
+        render();
+      })
+      .catch(function() {
+        grid.innerHTML = '<div class="state-message"><span class="state-icon">&#9888;</span>Could not load tracker data.<br><a href="#" onclick="location.reload();return false;">Retry</a></div>';
+        subtitle.textContent = '';
+      });
+  }
+
+  // ─── Filtering ───
+  function getFiltered() {
+    return items.filter(function(item) {
+      var matchStatus = activeStatus === 'all' || item.status === activeStatus;
+      var matchType = activeType === 'all' || item.type === activeType;
+      return matchStatus && matchType;
+    });
+  }
+
+  function updateSubtitle(filtered) {
+    var total = items.length;
+    var showing = filtered.length;
+
+    // Build status summary from total items
+    var counts = {};
+    items.forEach(function(item) {
+      counts[item.status] = (counts[item.status] || 0) + 1;
+    });
+    var parts = [];
+    ['done', 'needs-improvement', 'wip', 'planned'].forEach(function(s) {
+      if (counts[s]) parts.push(counts[s] + ' ' + STATUS_LABELS[s].toLowerCase());
+    });
+
+    if (activeStatus === 'all' && activeType === 'all') {
+      subtitle.textContent = total + ' items \u2014 ' + parts.join(', ');
+    } else {
+      subtitle.textContent = 'Showing ' + showing + ' of ' + total + ' items';
+    }
+  }
+
+  // ─── Rendering ───
+  function isImage(val) {
+    if (!val || typeof val !== 'string') return false;
+    return /\.(png|jpg|gif|webp)$/i.test(val.trim());
+  }
+
+  function renderComparisonContent(val) {
+    if (isImage(val)) {
+      return '<img src="' + escapeHtml(val) + '" alt="Comparison" loading="lazy">';
+    }
+    return '<p>' + escapeHtml(val) + '</p>';
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function createCard(item, index) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.status = item.status;
+    card.style.animationDelay = (index * 0.04) + 's';
+
+    var statusLabel = STATUS_LABELS[item.status] || item.status;
+    var typeLabel = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+
+    // Build expanded content
+    var expandedParts = [];
+
+    if (item.notes) {
+      expandedParts.push('<div class="card-notes">' + escapeHtml(item.notes) + '</div>');
+    }
+
+    if (item.link) {
+      expandedParts.push(
+        '<div class="card-link">' +
+        '<div class="card-link-label">Link</div>' +
+        '<a href="' + escapeHtml(item.link) + '" target="_blank" rel="noopener">' + escapeHtml(item.link) + '</a>' +
+        '</div>'
+      );
+    }
+
+    if (item.examples && item.examples.length) {
+      var lis = item.examples.map(function(ex) {
+        return '<li><a href="' + escapeHtml(ex) + '" target="_blank" rel="noopener">' + escapeHtml(ex) + '</a></li>';
+      }).join('');
+      expandedParts.push(
+        '<div class="card-examples">' +
+        '<div class="card-examples-label">Examples</div>' +
+        '<ul>' + lis + '</ul>' +
+        '</div>'
+      );
+    }
+
+    if (item.comparison) {
+      expandedParts.push(
+        '<div class="comparison-panel">' +
+        '<div class="comparison-col without">' +
+        '<span class="comparison-label">Without</span>' +
+        renderComparisonContent(item.comparison.without) +
+        '</div>' +
+        '<div class="comparison-col with">' +
+        '<span class="comparison-label">With</span>' +
+        renderComparisonContent(item.comparison.with) +
+        '</div>' +
+        '</div>'
+      );
+    }
+
+    var hasExpanded = expandedParts.length > 0;
+
+    card.innerHTML =
+      '<div class="card-collapsed">' +
+        '<div class="card-top-row">' +
+          '<span class="card-name">' + escapeHtml(item.name) + '</span>' +
+          '<div class="card-badges">' +
+            '<span class="badge-status ' + item.status + '">' + statusLabel + '</span>' +
+            '<span class="badge-type">' + typeLabel + '</span>' +
+            (hasExpanded ? '<svg class="expand-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div class="card-desc">' + escapeHtml(item.description) + '</div>' +
+      '</div>' +
+      (hasExpanded
+        ? '<div class="card-expanded"><div class="card-expanded-inner">' + expandedParts.join('') + '</div></div>'
+        : '');
+
+    if (hasExpanded) {
+      card.addEventListener('click', function(e) {
+        // Don't toggle if clicking a link
+        if (e.target.tagName === 'A') return;
+        card.classList.toggle('expanded');
+      });
+    } else {
+      card.style.cursor = 'default';
+    }
+
+    return card;
+  }
+
+  function render() {
+    var filtered = getFiltered();
+    updateSubtitle(filtered);
+    grid.innerHTML = '';
+
+    if (!filtered.length) {
+      grid.innerHTML = '<div class="state-message"><span class="state-icon">&#9655;</span>No items match the current filters.</div>';
+      return;
+    }
+
+    filtered.forEach(function(item, i) {
+      grid.appendChild(createCard(item, i));
+    });
+  }
+
+  // ─── Filter Buttons ───
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var group = btn.dataset.group;
+
+      // Deactivate siblings
+      document.querySelectorAll('.filter-btn[data-group="' + group + '"]').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      if (group === 'status') {
+        activeStatus = btn.dataset.status;
+      } else {
+        activeType = btn.dataset.type;
+      }
+
+      render();
+    });
+  });
+
+  // ─── Init ───
+  load();
+})();
+</script>
+
+</body>
+</html>
