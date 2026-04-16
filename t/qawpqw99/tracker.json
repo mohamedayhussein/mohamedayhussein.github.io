@@ -4,6 +4,7 @@
     "name": "Integrating Qualtrics",
     "type": "skill",
     "status": "done",
+    "category": "research",
     "description": "Build, edit, distribute, and download Qualtrics surveys via API",
     "detailedDescription": "Wraps the full Qualtrics API so Claude can create surveys from scratch, duplicate existing ones, add or edit question blocks, set flow logic, distribute via anonymous links, and export response data — all through natural language. Eliminates the need to navigate the Qualtrics web UI for routine survey operations."
   },
@@ -12,6 +13,7 @@
     "name": "Prolific",
     "type": "skill",
     "status": "done",
+    "category": "research",
     "description": "Create, launch, pause, and manage Prolific studies with participant messaging and exclusion groups",
     "detailedDescription": "Manages the full lifecycle of Prolific studies: drafting studies with prescreening criteria, setting compensation, launching and pausing recruitment, sending bulk messages to participants, approving submissions, and managing exclusion groups to prevent repeat participation across related studies."
   },
@@ -20,79 +22,71 @@
     "name": "Analyze Study",
     "type": "skill",
     "status": "done",
+    "category": "research",
     "description": "End-to-end data analysis with three-way cross-language verification (2 R + 1 Stata) and publication-ready summary",
     "detailedDescription": "Takes raw experimental data (Qualtrics CSV, .sav, or .rds) and runs the full analysis pipeline. Three independent agents — two writing R scripts and one writing Stata .do files — analyze the data in parallel. Results are cross-verified to ensure no single-language bug produces a false finding. Outputs a publication-ready VERIFIED summary with AMA-formatted statistics, effect sizes, and confidence intervals."
-  },
-  {
-    "id": "academic-site-generator",
-    "name": "Academic Site Generator",
-    "type": "skill",
-    "status": "done",
-    "description": "Convert paper PDFs into an LLM-optimized GitHub Pages site with Schema.org markup and SSRN packages",
-    "link": "https://mohamedayhussein.github.io",
-    "detailedDescription": "Reads academic paper PDFs and generates a complete static website optimized for both search engines and LLMs. Each paper gets its own page with Schema.org structured data, Google Scholar meta tags, Open Graph cards, and a plain-text abstract. Also generates llms.txt for AI discoverability, a sitemap.xml, and SSRN upload packages with formatted metadata."
-  },
-  {
-    "id": "beautiful-beamer",
-    "name": "Beautiful Beamer",
-    "type": "skill",
-    "status": "done",
-    "description": "End-to-end Beamer (LaTeX) deck builder with rhetoric and graphics audit",
-    "detailedDescription": "Designs an original Beamer theme tailored to the audience, restructures talk content using a rhetoric framework (ethos, pathos, logos), generates publication-quality figures from R, Python, or Stata code, and compiles to zero LaTeX warnings. Dispatches separate rhetoric and graphics audit agents to review the final deck before delivery."
-  },
-  {
-    "id": "beautiful-pptx",
-    "name": "Beautiful PPTX",
-    "type": "skill",
-    "status": "done",
-    "description": "End-to-end PowerPoint deck builder from Kellogg template with click-triggered animations",
-    "detailedDescription": "Builds seminar and conference talks as PowerPoint files using python-pptx. Extracts the user's institutional template, generates statistical figures in Stata or R, constructs slides with proper hierarchy, and injects click-triggered animations (progressive figure reveal via white-box covers, bullet-by-bullet text entry) by directly editing the OOXML timing tree. Rhetoric and graphics audit sub-agents review the output."
-  },
-  {
-    "id": "pptx-animate",
-    "name": "PPTX Animate",
-    "type": "skill",
-    "status": "done",
-    "description": "Standalone PowerPoint animation injector — cover-reveal and text-reveal via OOXML",
-    "detailedDescription": "A standalone tool that adds professional click-triggered animations to any existing .pptx file by directly manipulating the OOXML <p:timing> tree. Supports two animation patterns: cover-reveal (white rectangles that progressively disappear to reveal figures underneath) and text-reveal (paragraphs or bullets that enter one at a time on click). No PowerPoint application needed — works purely at the XML level."
-  },
-  {
-    "id": "reimbursements",
-    "name": "Reimbursements",
-    "type": "skill",
-    "status": "done",
-    "description": "Turn a folder of conference travel receipts into a Columbia reimbursement spreadsheet",
-    "detailedDescription": "Point it at a folder of conference travel receipts — PDFs, photos of restaurant bills, taxi fares, hotel folios — and it reads each one, extracts the vendor, date, amount, and expense category, then assembles everything into a formatted Excel spreadsheet matching Columbia's reimbursement requirements. Handles currency conversion and flags missing information."
   },
   {
     "id": "results-email",
     "name": "Results Email",
     "type": "skill",
     "status": "done",
+    "category": "research",
     "description": "Draft a collaborator results email as a .docx from a verified analysis summary",
     "detailedDescription": "After a study analysis is complete, this skill reads the verified summary and drafts a professional .docx email to collaborators. It highlights key findings, formats statistics clearly, notes any surprises or caveats, and structures the message so co-authors can quickly understand what the data show without wading through full analysis output."
+  },
+  {
+    "id": "beautiful-pptx",
+    "name": "Beautiful PPTX",
+    "type": "skill",
+    "status": "done",
+    "category": "research",
+    "description": "End-to-end PowerPoint deck builder from Kellogg template with click-triggered animations",
+    "detailedDescription": "Builds seminar and conference talks as PowerPoint files using python-pptx. Extracts the user's institutional template, generates statistical figures in Stata or R, constructs slides with proper hierarchy, and injects click-triggered animations (progressive figure reveal via white-box covers, bullet-by-bullet text entry) by directly editing the OOXML timing tree. Rhetoric and graphics audit sub-agents review the output."
+  },
+  {
+    "id": "beautiful-beamer",
+    "name": "Beautiful Beamer",
+    "type": "skill",
+    "status": "done",
+    "category": "research",
+    "description": "End-to-end Beamer (LaTeX) deck builder with rhetoric and graphics audit",
+    "detailedDescription": "Designs an original Beamer theme tailored to the audience, restructures talk content using a rhetoric framework (ethos, pathos, logos), generates publication-quality figures from R, Python, or Stata code, and compiles to zero LaTeX warnings. Dispatches separate rhetoric and graphics audit agents to review the final deck before delivery."
+  },
+  {
+    "id": "pptx-animate",
+    "name": "PPTX Animate",
+    "type": "skill",
+    "status": "done",
+    "category": "research",
+    "description": "Standalone PowerPoint animation injector — cover-reveal and text-reveal via OOXML",
+    "detailedDescription": "A standalone tool that adds professional click-triggered animations to any existing .pptx file by directly manipulating the OOXML <p:timing> tree. Supports two animation patterns: cover-reveal (white rectangles that progressively disappear to reveal figures underneath) and text-reveal (paragraphs or bullets that enter one at a time on click). No PowerPoint application needed — works purely at the XML level."
   },
   {
     "id": "style-guide",
     "name": "Style Guide",
     "type": "skill",
     "status": "done",
+    "category": "research",
     "description": "Draft and revise academic writing in Mohamed Hussein's voice for top journals",
     "detailedDescription": "Encodes the writing style, voice, and conventions used in Mohamed Hussein's published work across journals like JCR, PSPB, JESP, and JEP:General. Handles paper introductions, theory build-ups, hypothesis statements, method sections, results prose, discussion and limitations, and abstracts — all matching the specific tone, sentence structure, and argumentation patterns from prior publications."
   },
   {
-    "id": "skill-creator",
-    "name": "Skill Creator",
-    "type": "tool",
+    "id": "academic-site-generator",
+    "name": "Academic Site Generator",
+    "type": "skill",
     "status": "done",
-    "description": "Meta-skill for creating, benchmarking, and improving other skills",
-    "detailedDescription": "A meta-tool for building and improving Claude Code skills. Handles the full skill development lifecycle: writing SKILL.md files with proper trigger descriptions, running eval prompts to benchmark pass rates and token usage, diagnosing under-triggering issues, optimizing skill descriptions empirically, and packaging skills for distribution. Includes pressure-testing against subagent rationalization."
+    "category": "research",
+    "link": "https://mohamedayhussein.github.io",
+    "description": "Convert paper PDFs into an LLM-optimized GitHub Pages site with Schema.org markup and SSRN packages",
+    "detailedDescription": "Reads academic paper PDFs and generates a complete static website optimized for both search engines and LLMs. Each paper gets its own page with Schema.org structured data, Google Scholar meta tags, Open Graph cards, and a plain-text abstract. Also generates llms.txt for AI discoverability, a sitemap.xml, and SSRN upload packages with formatted metadata."
   },
   {
     "id": "k-means-clustering",
     "name": "K-Means Clustering",
     "type": "tool",
     "status": "done",
+    "category": "teaching",
     "description": "K-means clustering tool for data analysis",
     "link": "https://kmeans-tool.vercel.app",
     "detailedDescription": "An interactive web application for k-means clustering analysis. Students and instructors can upload data, configure the number of clusters, and visualize the iterative clustering process. Features password-protected access, JWT authentication, and results validated against an Excel macro implementation. Built with Vite and vanilla JavaScript, backed by Neon PostgreSQL."
@@ -102,8 +96,27 @@
     "name": "Concept Checks",
     "type": "tool",
     "status": "done",
+    "category": "teaching",
     "description": "Duolingo-style PWA for students to review lecture content through interactive quizzes with XP gamification, AI grading, and instructor dashboard",
     "link": "https://concept-checks.vercel.app",
     "detailedDescription": "A Progressive Web App built for a Columbia University marketing course. Students review lecture material through interactive concept checks with multiple choice, true/false, and short answer questions. Features XP-based gamification with achievements, OpenAI-powered grading and explanations for free-response questions, and an instructor dashboard for importing Canvas course content and tracking student progress. Built with Next.js 14 and Columbia CAS authentication."
+  },
+  {
+    "id": "reimbursements",
+    "name": "Reimbursements",
+    "type": "skill",
+    "status": "done",
+    "category": "logistics",
+    "description": "Turn a folder of conference travel receipts into a Columbia reimbursement spreadsheet",
+    "detailedDescription": "Point it at a folder of conference travel receipts — PDFs, photos of restaurant bills, taxi fares, hotel folios — and it reads each one, extracts the vendor, date, amount, and expense category, then assembles everything into a formatted Excel spreadsheet matching Columbia's reimbursement requirements. Handles currency conversion and flags missing information."
+  },
+  {
+    "id": "skill-creator",
+    "name": "Skill Creator",
+    "type": "tool",
+    "status": "done",
+    "category": "other",
+    "description": "Meta-skill for creating, benchmarking, and improving other skills",
+    "detailedDescription": "A meta-tool for building and improving Claude Code skills. Handles the full skill development lifecycle: writing SKILL.md files with proper trigger descriptions, running eval prompts to benchmark pass rates and token usage, diagnosing under-triggering issues, optimizing skill descriptions empirically, and packaging skills for distribution. Includes pressure-testing against subagent rationalization."
   }
 ]

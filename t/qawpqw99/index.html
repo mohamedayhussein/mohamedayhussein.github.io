@@ -406,6 +406,22 @@
     line-height: 1.5;
   }
 
+  /* ─── CATEGORY HEADERS ─── */
+  .category-row td {
+    padding: 20px 16px 8px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .category-row:first-child td {
+    padding-top: 12px;
+  }
+
   /* ─── STATES ─── */
   .state-message {
     text-align: center;
@@ -458,26 +474,7 @@
 </header>
 
 <div class="container">
-  <div class="filters">
-    <div class="filter-row">
-      <span class="filter-label">Status</span>
-      <button class="filter-btn active" data-group="status" data-status="all">All</button>
-      <button class="filter-btn" data-group="status" data-status="done">Done</button>
-      <button class="filter-btn" data-group="status" data-status="needs-improvement">Needs Improvement</button>
-      <button class="filter-btn" data-group="status" data-status="wip">WIP</button>
-      <button class="filter-btn" data-group="status" data-status="planned">Planned</button>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Type</span>
-      <button class="filter-btn active" data-group="type" data-type="all">All</button>
-      <button class="filter-btn" data-group="type" data-type="skill">Skill</button>
-      <button class="filter-btn" data-group="type" data-type="tool">Tool</button>
-      <button class="filter-btn" data-group="type" data-type="workflow">Workflow</button>
-      <button class="filter-btn" data-group="type" data-type="library">Library</button>
-    </div>
-  </div>
-
-  <div class="table-wrap">
+  <div class="table-wrap" style="margin-top: 24px;">
     <div id="table-container"></div>
   </div>
 </div>
@@ -489,13 +486,9 @@
   var container = document.getElementById('table-container');
   var subtitle = document.getElementById('subtitle');
   var items = [];
-  var activeStatus = 'all';
-  var activeType = 'all';
 
-  var STATUS_PRIORITY = { done: 0, 'needs-improvement': 1, wip: 2, planned: 3 };
-  var STATUS_LABELS = { done: 'Done', 'needs-improvement': 'Needs Improvement', wip: 'WIP', planned: 'Planned' };
-  var VALID_STATUSES = ['done', 'needs-improvement', 'wip', 'planned'];
-  var VALID_TYPES = ['skill', 'tool', 'workflow', 'library'];
+  var CATEGORY_LABELS = { research: 'Research', teaching: 'Teaching', logistics: 'Logistics', other: 'Other' };
+  var CATEGORY_ORDER = ['research', 'teaching', 'logistics', 'other'];
 
   function escapeHtml(str) {
     if (!str) return '';
@@ -531,12 +524,6 @@
           subtitle.textContent = '0 items';
           return;
         }
-        items.sort(function(a, b) {
-          var pa = STATUS_PRIORITY[a.status] || 99;
-          var pb = STATUS_PRIORITY[b.status] || 99;
-          if (pa !== pb) return pa - pb;
-          return a.name.localeCompare(b.name);
-        });
         render();
       })
       .catch(function() {
@@ -545,31 +532,17 @@
       });
   }
 
-  // ─── Filtering ───
-  function getFiltered() {
-    return items.filter(function(item) {
-      var matchStatus = activeStatus === 'all' || item.status === activeStatus;
-      var matchType = activeType === 'all' || item.type === activeType;
-      return matchStatus && matchType;
-    });
-  }
-
-  function updateSubtitle(filtered) {
-    var total = items.length;
-    var showing = filtered.length;
-    var counts = {};
+  function updateSubtitle() {
+    var catCounts = {};
     items.forEach(function(item) {
-      counts[item.status] = (counts[item.status] || 0) + 1;
+      var cat = item.category || 'other';
+      catCounts[cat] = (catCounts[cat] || 0) + 1;
     });
     var parts = [];
-    ['done', 'needs-improvement', 'wip', 'planned'].forEach(function(s) {
-      if (counts[s]) parts.push(counts[s] + ' ' + STATUS_LABELS[s].toLowerCase());
+    CATEGORY_ORDER.forEach(function(c) {
+      if (catCounts[c]) parts.push(catCounts[c] + ' ' + CATEGORY_LABELS[c].toLowerCase());
     });
-    if (activeStatus === 'all' && activeType === 'all') {
-      subtitle.textContent = total + ' items \u2014 ' + parts.join(', ');
-    } else {
-      subtitle.textContent = 'Showing ' + showing + ' of ' + total + ' items';
-    }
+    subtitle.textContent = items.length + ' items — ' + parts.join(', ');
   }
 
   function imageUrl(item) {
@@ -620,47 +593,46 @@
 
   // ─── Rendering ───
   function render() {
-    var filtered = getFiltered();
-    updateSubtitle(filtered);
+    updateSubtitle();
 
-    if (!filtered.length) {
-      container.innerHTML = '<div class="state-message"><span class="state-icon">&#9655;</span>No items match the current filters.</div>';
-      return;
-    }
+    // Group items by category, preserving JSON order within each group
+    var grouped = {};
+    CATEGORY_ORDER.forEach(function(c) { grouped[c] = []; });
+    items.forEach(function(item) {
+      var cat = item.category || 'other';
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(item);
+    });
 
     var html = '<table><thead><tr>' +
       '<th>Name</th>' +
-      '<th>Type</th>' +
-      '<th>Status</th>' +
       '<th>Description</th>' +
-      '<th>Notes</th>' +
       '</tr></thead><tbody>';
 
-    filtered.forEach(function(item, i) {
-      var safeStatus = VALID_STATUSES.indexOf(item.status) !== -1 ? item.status : 'unknown';
-      var safeType = VALID_TYPES.indexOf(item.type) !== -1 ? item.type : 'unknown';
-      var statusLabel = STATUS_LABELS[item.status] || escapeHtml(item.status);
-      var typeLabel = escapeHtml(safeType.charAt(0).toUpperCase() + safeType.slice(1));
-      var hasDetail = true; // all rows have illustration images
-      var rowId = 'row-' + i;
-      var detailId = 'detail-' + i;
+    var idx = 0;
+    CATEGORY_ORDER.forEach(function(cat) {
+      var group = grouped[cat];
+      if (!group || !group.length) return;
 
-      // Main row
-      html += '<tr id="' + rowId + '"' + (hasDetail ? ' class="expandable" tabindex="0" role="button" aria-expanded="false" aria-controls="' + detailId + '"' : '') + '>';
-      html += '<td class="col-name">';
-      html += '<svg class="expand-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>';
-      html += '<img class="skill-thumb" src="' + imageUrl(item) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
-      html += escapeHtml(item.name) + '</td>';
-      html += '<td><span class="badge-type">' + typeLabel + '</span></td>';
-      html += '<td><span class="badge-status ' + safeStatus + '">' + statusLabel + '</span></td>';
-      html += '<td class="col-desc">' + escapeHtml(item.description) + '</td>';
-      html += '<td class="col-notes">' + escapeHtml(item.notes || '') + '</td>';
-      html += '</tr>';
+      // Category header row
+      html += '<tr class="category-row"><td colspan="2">' + escapeHtml(CATEGORY_LABELS[cat] || cat) + '</td></tr>';
 
-      // Detail row (hidden by default)
-      if (hasDetail) {
-        html += '<tr id="' + detailId + '" class="detail-row"><td colspan="5"><div class="detail-content">' + buildDetailHtml(item) + '</div></td></tr>';
-      }
+      group.forEach(function(item) {
+        var rowId = 'row-' + idx;
+        var detailId = 'detail-' + idx;
+
+        html += '<tr id="' + rowId + '" class="expandable" tabindex="0" role="button" aria-expanded="false" aria-controls="' + detailId + '">';
+        html += '<td class="col-name">';
+        html += '<svg class="expand-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg>';
+        html += '<img class="skill-thumb" src="' + imageUrl(item) + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">';
+        html += escapeHtml(item.name) + '</td>';
+        html += '<td class="col-desc">' + escapeHtml(item.description) + '</td>';
+        html += '</tr>';
+
+        html += '<tr id="' + detailId + '" class="detail-row"><td colspan="2"><div class="detail-content">' + buildDetailHtml(item) + '</div></td></tr>';
+
+        idx++;
+      });
     });
 
     html += '</tbody></table>';
@@ -684,23 +656,6 @@
       });
     });
   }
-
-  // ─── Filter Buttons ───
-  document.querySelectorAll('.filter-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var group = btn.dataset.group;
-      document.querySelectorAll('.filter-btn[data-group="' + group + '"]').forEach(function(b) {
-        b.classList.remove('active');
-      });
-      btn.classList.add('active');
-      if (group === 'status') {
-        activeStatus = btn.dataset.status;
-      } else {
-        activeType = btn.dataset.type;
-      }
-      render();
-    });
-  });
 
   // ─── Init ───
   load();
