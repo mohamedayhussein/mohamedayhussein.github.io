@@ -102,6 +102,16 @@
     "detailedDescription": "A Progressive Web App built for a Columbia University marketing course. Students review lecture material through interactive concept checks with multiple choice, true/false, and short answer questions. Features XP-based gamification with achievements, OpenAI-powered grading and explanations for free-response questions, and an instructor dashboard for importing Canvas course content and tracking student progress. Built with Next.js 14 and Columbia CAS authentication."
   },
   {
+    "id": "china-restaurant-tracker",
+    "name": "China Province Tracker",
+    "type": "tool",
+    "status": "done",
+    "category": "other",
+    "description": "Interactive map tracking restaurant visits from each of China's 34 provincial-level divisions",
+    "link": "https://china-restaurant-tracker.vercel.app",
+    "detailedDescription": "A mobile-friendly web app for tracking restaurant visits representing each of China's 34 provincial-level divisions. Features an interactive SVG map that colors provinces green as restaurants are logged, a list view of all entries, and a password-protected add form for recording restaurant name, NYC location, and meal notes. Built with Next.js 16, Neon PostgreSQL, and Tailwind CSS. Shared among friends via a single password gate with HMAC-signed session cookies."
+  },
+  {
     "id": "reimbursements",
     "name": "Reimbursements",
     "type": "skill",
