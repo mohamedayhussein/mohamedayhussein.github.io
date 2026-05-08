@@ -18,6 +18,15 @@
     "detailedDescription": "Manages the full lifecycle of Prolific studies: drafting studies with prescreening criteria, setting compensation, launching and pausing recruitment, sending bulk messages to participants, approving submissions, and managing exclusion groups to prevent repeat participation across related studies."
   },
   {
+    "id": "cloudresearch-connect",
+    "name": "CloudResearch Connect",
+    "type": "skill",
+    "status": "done",
+    "category": "research",
+    "description": "Create, launch, schedule, and manage CloudResearch Connect studies with demographic targeting, messaging, and exclusion groups",
+    "detailedDescription": "Wraps the CloudResearch Connect REST API for full study lifecycle management. Creates projects with demographic targeting (782 available criteria), launches or schedules recruitment, monitors progress via statistics and assignment tracking, sends direct and bulk messages to participants, and manages participant groups for exclusion across studies. Integrates with Qualtrics automatically — checks and creates embedded data fields, appends Connect URL parameters, and injects completion redirects. Three-tier safety model blocks irreversible money operations (approvals, rejections, bonuses) and redirects to the web UI."
+  },
+  {
     "id": "analyze-study",
     "name": "Analyze Study",
     "type": "skill",
