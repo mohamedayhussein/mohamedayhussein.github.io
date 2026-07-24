@@ -6,7 +6,7 @@
     "status": "done",
     "category": "research",
     "description": "Build, edit, distribute, and download Qualtrics surveys via API",
-    "detailedDescription": "Wraps the full Qualtrics API so Claude can create surveys from scratch, duplicate existing ones, add or edit question blocks, set flow logic, distribute via anonymous links, and export response data — all through natural language. Eliminates the need to navigate the Qualtrics web UI for routine survey operations."
+    "detailedDescription": "Wraps the full Qualtrics API so Claude can create surveys from scratch, duplicate existing ones, add or edit question blocks, set flow logic, distribute via anonymous links, and export response data \u2014 all through natural language. Eliminates the need to navigate the Qualtrics web UI for routine survey operations."
   },
   {
     "id": "prolific",
@@ -24,7 +24,7 @@
     "status": "done",
     "category": "research",
     "description": "Create, launch, schedule, and manage CloudResearch Connect studies with demographic targeting, messaging, and exclusion groups",
-    "detailedDescription": "Wraps the CloudResearch Connect REST API for full study lifecycle management. Creates projects with demographic targeting (782 available criteria), launches or schedules recruitment, monitors progress via statistics and assignment tracking, sends direct and bulk messages to participants, and manages participant groups for exclusion across studies. Integrates with Qualtrics automatically — checks and creates embedded data fields, appends Connect URL parameters, and injects completion redirects. Three-tier safety model blocks irreversible money operations (approvals, rejections, bonuses) and redirects to the web UI."
+    "detailedDescription": "Wraps the CloudResearch Connect REST API for full study lifecycle management. Creates projects with demographic targeting (782 available criteria), launches or schedules recruitment, monitors progress via statistics and assignment tracking, sends direct and bulk messages to participants, and manages participant groups for exclusion across studies. Integrates with Qualtrics automatically \u2014 checks and creates embedded data fields, appends Connect URL parameters, and injects completion redirects. Three-tier safety model blocks irreversible money operations (approvals, rejections, bonuses) and redirects to the web UI."
   },
   {
     "id": "analyze-study",
@@ -33,7 +33,16 @@
     "status": "done",
     "category": "research",
     "description": "End-to-end data analysis with three-way cross-language verification (2 R + 1 Stata) and publication-ready summary",
-    "detailedDescription": "Takes raw experimental data (Qualtrics CSV, .sav, or .rds) and runs the full analysis pipeline. Three independent agents — two writing R scripts and one writing Stata .do files — analyze the data in parallel. Results are cross-verified to ensure no single-language bug produces a false finding. Outputs a publication-ready VERIFIED summary with AMA-formatted statistics, effect sizes, and confidence intervals."
+    "detailedDescription": "Takes raw experimental data (Qualtrics CSV, .sav, or .rds) and runs the full analysis pipeline. Three independent agents \u2014 two writing R scripts and one writing Stata .do files \u2014 analyze the data in parallel. Results are cross-verified to ensure no single-language bug produces a false finding. Outputs a publication-ready VERIFIED summary with AMA-formatted statistics, effect sizes, and confidence intervals."
+  },
+  {
+    "id": "data-reviewer",
+    "name": "Data Reviewer",
+    "type": "skill",
+    "status": "done",
+    "category": "research",
+    "description": "Journal-style data reproducibility review - runs the deposited code and cross-checks every reported statistic against the OSF deposit",
+    "detailedDescription": "Acts as a journal data reviewer. Given a manuscript and its OSF link, it downloads the full OSF deposit, runs every deposited Stata/R script against the deposited data, and cross-checks every statistic in the paper against the syntax output. It flags numeric discrepancies, unreproducible results, code errors, sample-size mismatches, missing study materials, and figure defects, then writes a reviewer-style Requested Changes report. Read-only and non-destructive - it never edits the deposit or the manuscript."
   },
   {
     "id": "results-email",
@@ -68,8 +77,8 @@
     "type": "skill",
     "status": "done",
     "category": "research",
-    "description": "Standalone PowerPoint animation injector — cover-reveal and text-reveal via OOXML",
-    "detailedDescription": "A standalone tool that adds professional click-triggered animations to any existing .pptx file by directly manipulating the OOXML <p:timing> tree. Supports two animation patterns: cover-reveal (white rectangles that progressively disappear to reveal figures underneath) and text-reveal (paragraphs or bullets that enter one at a time on click). No PowerPoint application needed — works purely at the XML level."
+    "description": "Standalone PowerPoint animation injector \u2014 cover-reveal and text-reveal via OOXML",
+    "detailedDescription": "A standalone tool that adds professional click-triggered animations to any existing .pptx file by directly manipulating the OOXML <p:timing> tree. Supports two animation patterns: cover-reveal (white rectangles that progressively disappear to reveal figures underneath) and text-reveal (paragraphs or bullets that enter one at a time on click). No PowerPoint application needed \u2014 works purely at the XML level."
   },
   {
     "id": "style-guide",
@@ -78,7 +87,7 @@
     "status": "done",
     "category": "research",
     "description": "Draft and revise academic writing in Mohamed Hussein's voice for top journals",
-    "detailedDescription": "Encodes the writing style, voice, and conventions used in Mohamed Hussein's published work across journals like JCR, PSPB, JESP, and JEP:General. Handles paper introductions, theory build-ups, hypothesis statements, method sections, results prose, discussion and limitations, and abstracts — all matching the specific tone, sentence structure, and argumentation patterns from prior publications."
+    "detailedDescription": "Encodes the writing style, voice, and conventions used in Mohamed Hussein's published work across journals like JCR, PSPB, JESP, and JEP:General. Handles paper introductions, theory build-ups, hypothesis statements, method sections, results prose, discussion and limitations, and abstracts \u2014 all matching the specific tone, sentence structure, and argumentation patterns from prior publications."
   },
   {
     "id": "academic-site-generator",
@@ -127,7 +136,7 @@
     "status": "done",
     "category": "logistics",
     "description": "Turn a folder of conference travel receipts into a Columbia reimbursement spreadsheet",
-    "detailedDescription": "Point it at a folder of conference travel receipts — PDFs, photos of restaurant bills, taxi fares, hotel folios — and it reads each one, extracts the vendor, date, amount, and expense category, then assembles everything into a formatted Excel spreadsheet matching Columbia's reimbursement requirements. Handles currency conversion and flags missing information."
+    "detailedDescription": "Point it at a folder of conference travel receipts \u2014 PDFs, photos of restaurant bills, taxi fares, hotel folios \u2014 and it reads each one, extracts the vendor, date, amount, and expense category, then assembles everything into a formatted Excel spreadsheet matching Columbia's reimbursement requirements. Handles currency conversion and flags missing information."
   },
   {
     "id": "skill-creator",
